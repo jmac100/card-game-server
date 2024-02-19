@@ -32,6 +32,11 @@ const savedGameSchema = new Schema(
          ref: 'Game',
          required: [true, 'Game is required']
       },
+      user: {
+         type: mongoose.Schema.Types.ObjectId,
+         ref: 'User',
+         required: [true, 'User is required']
+      },
       playerCards: {
          type: [cardSchema],
          required: [true, 'Player cards are required']
