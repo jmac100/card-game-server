@@ -35,9 +35,7 @@ export const savedGameController = {
    },
    list: async (req, res, next) => {
       try {
-         const savedGames = await SavedGame.find({ user: req.user._id })
-            .select('-playerCards -computerCards')
-            .populate('game')
+         const savedGames = await SavedGame.find({ user: req.user._id }).populate('game').populate('user')
 
          return res.status(200).json({
             success: true,

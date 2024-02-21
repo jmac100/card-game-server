@@ -34,10 +34,12 @@ app.get('/', (req, res) => {
 import authRouter from './routes/auth/index.js'
 import gameRouter from './routes/games/index.js'
 import savedGameRouter from './routes/savedGames/index.js'
+import statsRouter from './routes/stats/index.js'
 
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/games', gameRouter)
 app.use('/api/v1/saved', savedGameRouter)
+app.use('/api/v1/stats', statsRouter)
 
 app.use(notFound)
 app.use(errorHandler)

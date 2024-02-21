@@ -49,4 +49,4 @@ const savedGameSchema = new Schema(
    { timestamps: true }
 )
 
-export default mongoose.model('SavedGame', savedGameSchema)
+   export default mongoose.model('SavedGame', savedGameSchema)
