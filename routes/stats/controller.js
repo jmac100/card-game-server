@@ -5,7 +5,7 @@ export const statController = {
       try {
          const { userId, gameId, win } = req.body
          let stat = await Stat.find({ user: userId, game: gameId })
-         
+
          if (stat.length) {
             stat[0].totalPlayed += 1
             stat[0].totalWon = win ? stat[0].totalWon + 1 : stat[0].totalWon
@@ -22,6 +22,17 @@ export const statController = {
          return res.status(201).json({
             success: true,
             stat
+         })
+      } catch (error) {
+         next(error)
+      }
+   },
+   list: async (req, res, next) => {
+      try {
+         const stats = await Stat.find({ user: req.user._id }).populate('game').populate('user', '-password')
+         return res.status(201).json({
+            success: true,
+            stats
          })
       } catch (error) {
          next(error)
