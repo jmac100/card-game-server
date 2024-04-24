@@ -38,12 +38,18 @@ const savedGameSchema = new Schema(
          required: [true, 'User is required']
       },
       playerCards: {
-         type: [cardSchema],
-         required: [true, 'Player cards are required']
+         type: [cardSchema]
       },
       computerCards: {
-         type: [cardSchema],
-         required: [true, 'Computer cards are required']
+         type: [cardSchema]
+      },
+      bank: {
+        type: Number,
+        default: 0
+      },
+      bet: {
+        type: Number,
+        default: 0
       }
    },
    { timestamps: true }

@@ -25,6 +25,8 @@ export const savedGameController = {
 
          existingGame.playerCards = game.playerCards
          existingGame.computerCards = game.computerCards
+         existingGame.bank = game.bank
+         existingGame.bet = game.bet
 
          await existingGame.save()
 
