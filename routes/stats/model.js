@@ -21,6 +21,10 @@ const statSchema = new Schema(
       totalWon: {
          type: Number,
          required: [true, 'Total played is required']
+      },
+      descriptor: {
+        type: String,
+        default: 'Games'
       }
    },
    { timestamps: true }
