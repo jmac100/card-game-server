@@ -1,52 +1,39 @@
-import jwt from 'jsonwebtoken'
-import User from '../auth/model.js'
+import jwt from 'jsonwebtoken';
+import User from '../auth/model.js';
 
 export const auth = async (req, res, next) => {
-   const authToken = req.header('Authorization')
+   const authToken = req.cookies && req.cookies[process.env.TOKEN_NAME];
+
    if (!authToken)
-      return res.status(401).json({
-         auth: false,
-         msg: 'You must be logged in to perform this action'
-      })
+      return res.status(200).json({
+         auth: false
+      });
 
    try {
-      const token = authToken.split(' ')
-      if (token.length <= 1) {
-         return res.status(401).json({
-            auth: false,
-            msg: 'Invalid token format'
-         })
-      }
-      const decodedToken = jwt.verify(token[1], process.env.SECRET)
+      const decodedToken = jwt.verify(authToken, process.env.SECRET);
       if (!decodedToken)
          return res.status(401).json({
             auth: false,
-            msg: 'You have been logged out due to inactivity'
-         })
+            msg: 'You must be logged in to perform this action'
+         });
 
-      const user_id = decodedToken.id
-      const user = await User.findById(user_id).select('-password')
+      const user_id = decodedToken.id;
+      const user = await User.findById(user_id).select('-password');
       if (!user) {
          return res.status(401).json({
             auth: false,
             msg: 'You must be logged in to perform this action'
-         })
+         });
       }
 
-      req.user = user
+      req.user = user;
 
-      next()
+      next();
    } catch (error) {
-      let msg = 'An unknown error occurred while logging in'
-      if (typeof error === 'object') {
-         if (error.name === 'TokenExpiredError') 
-            msg = 'You have been logged out due to inactivity'
-         else
-            msg = error.message
-      }
       return res.status(401).json({
+         success: false,
          auth: false,
-         msg
-      })
+         msg: 'Invalid token'
+      });
    }
-}
+};

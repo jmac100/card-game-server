@@ -9,5 +9,7 @@ router.post('/register', register, authController.register)
 router.post('/login', authController.login)
 router.post('/user/update', auth, authController.updateUser)
 router.post('/user/:id/pwd', auth, authController.changePassword)
+router.get('/logout', auth, authController.logout);
+router.get('/validate', auth, authController.validateUser);
 
 export default router
